@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neural Networks Training & Approximation Mind Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mindmap {
+      position: relative;
+      width: 1000px;
+      height: 700px;
+      margin: 20px 0;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .node {
+      position: absolute;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .node:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    /* Colors: Red = Big Picture, Blue = Major Categories, Green = Details */
+    .red {
+      background-color: #ffcccc;
+      border: 2px solid #e60000;
+      color: #990000;
+    }
+    .blue {
+      background-color: #cce5ff;
+      border: 2px solid #0066cc;
+      color: #004080;
+    }
+    .green {
+      background-color: #ccffcc;
+      border: 2px solid #00cc00;
+      color: #006600;
+      font-weight: normal;
+    }
+    /* Info panel styles */
+    #infoPanel {
+      width: 1000px;
+      min-height: 150px;
+      padding: 15px;
+      margin-top: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    .infoTitle {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .infoContent {
+      line-height: 1.5;
+    }
+    line {
+      stroke: #999;
+      stroke-width: 2;
+    }
+    .legend {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+    .legendItem {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legendBox {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Neural Networks Training & Approximation</h1>
+    
+    <div class="mindmap" id="mindmap">
+      <!-- SVG for connecting lines -->
+      <svg width="1000" height="700" style="position: absolute; top: 0; left: 0;">
+        <!-- Main branches from central node -->
+        <line x1="500" y1="350" x2="150" y2="100" />   <!-- Backward Propagation branch -->
+        <line x1="500" y1="350" x2="850" y2="100" />   <!-- Universal Approximation branch -->
+        
+        <!-- Sub-branches for Backward Propagation -->
+        <line x1="150" y1="100" x2="50" y2="30" />    <!-- Learning & Weight Update -->
+        <line x1="150" y1="100" x2="50" y2="170" />   <!-- Backpropagation Mechanics -->
+        <line x1="150" y1="100" x2="150" y2="230" />  <!-- Vanishing Gradients -->
+        
+        <!-- Sub-branches for Universal Approximation -->
+        <line x1="850" y1="100" x2="750" y2="30" />   <!-- Function Approximation -->
+        <line x1="850" y1="100" x2="750" y2="170" />  <!-- Proof Idea -->
+        <line x1="850" y1="100" x2="850" y2="230" />  <!-- Implications -->
+      </svg>
+      
+      <!-- Central Big Picture Node -->
+      <div class="node red" style="width: 180px; top: 320px; left: 410px;" 
+           onclick="showInfo('Neural Networks', '<ul><li><span class=\'highlight\'>Overview:</span> Systems inspired by the brain capable of learning and approximating functions.</li><li>Foundation for training via backpropagation and for universal function approximation.</li></ul>')">
+        Neural Networks
+      </div>
+      
+      <!-- Blue Major Category Nodes -->
+      <div class="node blue" style="width: 200px; top: 70px; left: 100px;" 
+           onclick="showInfo('Backward Propagation', '<ul><li>Trains the network by updating weights.</li><li>Utilizes gradient descent: w ← w - α∇loss.</li><li>Often implemented as Stochastic Gradient Descent (single-sample updates).</li></ul>')">
+        Backward Propagation
+      </div>
+      <div class="node blue" style="width: 220px; top: 70px; left: 730px;" 
+           onclick="showInfo('Universal Approximation', '<ul><li>A single hidden layer can approximate any continuous function.</li><li>Uses sigmoid activations to form binary thresholds.</li><li>Proof constructs staircase functions from hidden neurons.</li></ul>')">
+        Universal Approximation
+      </div>
+      
+      <!-- Green Detail Nodes for Backward Propagation -->
+      <div class="node green" style="width: 180px; top: 0px; left: 20px;" 
+           onclick="showInfo('Learning & Weight Update', '<ul><li>Error is measured with MSE: ½(y - ŷ)².</li><li>Weights are updated via: w = w - α∇loss.</li><li>The learning rate α affects convergence speed.</li></ul>')">
+        Learning &amp; Weight Update
+      </div>
+      <div class="node green" style="width: 180px; top: 120px; left: 20px;" 
+           onclick="showInfo('Backpropagation Mechanics', '<ul><li>Applies the chain rule to compute gradients.</li><li>For ReLU: derivative is 1 if input > 0, else 0.</li><li>Error is propagated from output back through the layers.</li></ul>')">
+        Backpropagation Mechanics
+      </div>
+      <div class="node green" style="width: 180px; top: 200px; left: 100px;" 
+           onclick="showInfo('Vanishing Gradients', '<ul><li>Gradients may shrink in deep networks.</li><li>Can slow down or halt learning.</li><li>Mitigations include using ReLU, batch normalization, or shallower networks.</li></ul>')">
+        Vanishing Gradients
+      </div>
+      
+      <!-- Green Detail Nodes for Universal Approximation -->
+      <div class="node green" style="width: 180px; top: 0px; left: 660px;" 
+           onclick="showInfo('Function Approximation', '<ul><li>Networks partition feature space to approximate functions.</li><li>Approximation can be “good enough” for practical use.</li></ul>')">
+        Function Approximation
+      </div>
+      <div class="node green" style="width: 180px; top: 120px; left: 660px;" 
+           onclick="showInfo('Proof Idea', '<ul><li>Uses sigmoid activations as binary thresholds.</li><li>Constructs a staircase function to approximate any continuous function.</li></ul>')">
+        Proof Idea
+      </div>
+      <div class="node green" style="width: 180px; top: 200px; left: 730px;" 
+           onclick="showInfo('Implications', '<ul><li>A single hidden layer is theoretically sufficient.</li><li>Ensures networks have the capacity for complex tasks.</li></ul>')">
+        Implications
+      </div>
+    </div>
+    
+    <!-- Information Panel -->
+    <div id="infoPanel">
+      <div class="infoTitle" id="infoTitle">Click on a concept to see details</div>
+      <div class="infoContent" id="infoContent">
+        Select any node in the mind map to display detailed information about that concept.
+      </div>
+    </div>
+    
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legendItem">
+        <div class="legendBox red"></div>
+        <span>Big Picture</span>
+      </div>
+      <div class="legendItem">
+        <div class="legendBox blue"></div>
+        <span>Major Categories</span>
+      </div>
+      <div class="legendItem">
+        <div class="legendBox green"></div>
+        <span>Details</span>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function showInfo(title, content) {
+      document.getElementById("infoPanel").style.display = "block";
+      document.getElementById("infoTitle").textContent = title;
+      document.getElementById("infoContent").innerHTML = content;
+    }
+  </script>
+</body>
+</html>
